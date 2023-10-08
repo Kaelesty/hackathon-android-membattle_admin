@@ -5,4 +5,6 @@
     <string name="finish">ЗАВЕРШИТЬ</string>
     <string name="start_battle">START BATTLE</string>
     <string name="stop_battle">STOP BATTLE</string>
+    <string name="battle_status">Battle status:</string>
+    <string name="response_status">Response status:</string>
 </resources>

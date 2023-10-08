@@ -2,28 +2,17 @@ package com.kaelesty.membattleadmin.presentation.fragments.battle
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import com.bumptech.glide.Glide
 import com.kaelesty.membattleadmin.AdminApplication
 import com.kaelesty.membattleadmin.databinding.FragmentBattleBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.Response
-import okhttp3.WebSocket
-import okhttp3.WebSocketListener
-import okio.ByteString
 import javax.inject.Inject
 
 class BattleFragment : Fragment() {
@@ -69,30 +58,40 @@ class BattleFragment : Fragment() {
 				viewModel.stopBattle()
 			}
 
-			tvResult.setOnClickListener {
+			buttonRestart.setOnClickListener {
+				startAwaiting()
+				viewModel.restart()
+			}
+
+			tvResultStatus.setOnClickListener {
 				startAwaiting()
 			}
 		}
 
-		viewModel.result.observe(requireActivity()) {
+		viewModel.responseResult.observe(requireActivity()) {
 			if (!awaitingJob.isCancelled) {
 				awaitingJob.cancel()
 			}
-			binding.tvResult.text = it
+			binding.tvResultStatus.text = it
+		}
+
+		viewModel.battleStatus.observe(requireActivity()) {
+			binding.tvBattleStatus.text = it
 		}
 
 		startAwaiting()
+		viewModel.loadBattleStatus()
 	}
 
 	private fun startAwaiting() {
 		if (!awaitingJob.isCancelled) {
 			awaitingJob.cancel()
 		}
-		awaitingJob = lifecycleScope.launch(Dispatchers.IO) {
+		awaitingJob = lifecycleScope.launch {
 			while (true) {
 				for (i in 0..3) {
 					delay(700)
-					binding.tvResult.text = "Awaiting ${".".repeat(i)}"
+					binding.tvResultStatus.text = "Awaiting ${".".repeat(i)}"
 				}
 			}
 		}
