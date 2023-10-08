@@ -26,6 +26,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:cardUseCompatPadding="true"
+        app:cardBackgroundColor="@color/navbar_bg"
         >
 
         <LinearLayout
@@ -36,27 +37,12 @@
             android:gravity="center"
             >
 
-            <androidx.cardview.widget.CardView
-                android:layout_width="75dp"
-                android:layout_height="75dp"
-                app:cardBackgroundColor="@color/white"
-                android:layout_marginEnd="16dp"
-                >
-                <ImageView
-                    android:id="@+id/navbutton_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/list_icon"
-                    android:background="@color/white"
-                    />
 
-            </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
                 android:layout_width="75dp"
                 android:layout_height="75dp"
                 app:cardBackgroundColor="@color/white"
-                android:layout_marginEnd="16dp"
                 >
                 <ImageView
                     android:id="@+id/navbutton_battle"
